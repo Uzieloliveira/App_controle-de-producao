@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private String secaoEscolhida;
     private AppDatabase db;
     private String usuarioRe;
+    private String usuarioDepto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
 
         db = AppDatabase.getInstance(this);
 
-        // Obter o RE do usuário logado
+        // Obter informações do usuário logado
         SharedPreferences preferences = getSharedPreferences("SessaoUsuario", Context.MODE_PRIVATE);
         usuarioRe = preferences.getString("RE_USUARIO", "");
+        usuarioDepto = preferences.getString("DEPTO_USUARIO", "");
 
         if (getIntent() != null && getIntent().hasExtra("SECAO")) {
             secaoEscolhida = getIntent().getStringExtra("SECAO");
@@ -89,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mudarSecao() {
-        final String[] secoes = {"Bandagem"};
+        // Opções de seção atualizadas
+        final String[] secoes = {"Ligação", "Solda", "Bandagem", "Amarração", "Prensa", "Acabamento"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.dialog_title_secao));
         builder.setItems(secoes, (dialog, which) -> {
@@ -133,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
         final int valorFinal = valor;
         final String anotacaoFinal = anotacao;
         
-        // Agora salva APENAS localmente no SQLite
-        Producao novaProducao = new Producao(operador, valorFinal, dataCadastro, secaoEscolhida, anotacaoFinal, usuarioRe);
+        // Agora salva APENAS localmente no SQLite incluindo o departamento
+        Producao novaProducao = new Producao(operador, valorFinal, dataCadastro, secaoEscolhida, anotacaoFinal, usuarioRe, usuarioDepto);
         db.producaoDao().inserir(novaProducao);
         
         confirmarSalvo();

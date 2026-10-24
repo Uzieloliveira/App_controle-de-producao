@@ -17,18 +17,20 @@ public class Usuario {
     
     public String nome;
     public String re;
+    public String departamento;
 
     // CONSTRUTOR VAZIO PÚBLICO E EXPLÍCITO - OBRIGATÓRIO PARA O FIREBASE
     public Usuario() {
     }
 
-    public Usuario(String nome, String re) {
+    public Usuario(String nome, String re, String departamento) {
         this.nome = nome;
         this.re = re;
+        this.departamento = departamento;
     }
 
     @Override
     public String toString() {
-        return nome + " (RE: " + re + ")";
+        return nome + " (RE: " + re + ") - " + departamento;
     }
 }

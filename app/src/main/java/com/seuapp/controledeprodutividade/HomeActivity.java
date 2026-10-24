@@ -36,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
         tvUsuarioLogado = findViewById(R.id.tvUsuarioLogado);
         btnSairHome = findViewById(R.id.btnSairHome);
         Button btnAbrirCadastro = findViewById(R.id.btnAbrirCadastro);
+        Button btnInformarPecas = findViewById(R.id.btnInformarPecas);
         Button btnListarCadastrados = findViewById(R.id.btnListarCadastrados);
 
         // Exibir o nome do usuário logado
@@ -46,6 +47,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selecionarSecao();
+            }
+        });
+
+        btnInformarPecas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, PecasRestantesActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -85,7 +94,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void selecionarSecao() {
-        final String[] secoes = {"Bandagem"};
+        // Agora permite selecionar todas as seções antes de entrar no cadastro
+        final String[] secoes = {"Ligação", "Solda", "Bandagem", "Amarração", "Prensa", "Acabamento"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.dialog_title_secao);

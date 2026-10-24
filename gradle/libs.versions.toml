@@ -27,7 +27,7 @@ firebaseBom = { group = "com.google.firebase", name = "firebase-bom", version.re
 firebaseFirestore = { group = "com.google.firebase", name = "firebase-firestore" }
 
 # Retrofit & OkHttp
-retrofitCore = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofitMain = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofitGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 okhttpLogging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 

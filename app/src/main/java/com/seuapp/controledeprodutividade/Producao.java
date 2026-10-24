@@ -18,19 +18,20 @@ public class Producao {
     public String secao;
     public String anotacao;
     public String usuarioRe;
+    public String departamento; // Novo campo
     public boolean enviado;
 
-    // Construtor vazio necessário para o Firebase
     public Producao() {
     }
 
-    public Producao(String operador, int quantidade, String data, String secao, String anotacao, String usuarioRe) {
+    public Producao(String operador, int quantidade, String data, String secao, String anotacao, String usuarioRe, String departamento) {
         this.operador = operador;
         this.quantidade = quantidade;
         this.data = data;
         this.secao = secao;
         this.anotacao = anotacao;
         this.usuarioRe = usuarioRe;
+        this.departamento = departamento;
         this.enviado = false;
     }
 }

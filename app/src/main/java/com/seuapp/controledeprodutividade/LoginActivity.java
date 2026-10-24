@@ -20,11 +20,10 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputLayout layoutLoginNome;
     private TextInputLayout layoutLoginRE;
-    private TextInputEditText editLoginNome;
     private TextInputEditText editLoginRE;
     private Button btnEntrarLogin;
+    private Button btnIrParaCadastro;
     private Button btnSelecionarUsuario;
     private ProgressBar pbLogin;
     private AppDatabase db;
@@ -42,15 +41,20 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        layoutLoginNome = findViewById(R.id.layoutLoginNome);
         layoutLoginRE = findViewById(R.id.layoutLoginRE);
-        editLoginNome = findViewById(R.id.editLoginNome);
         editLoginRE = findViewById(R.id.editLoginRE);
         btnEntrarLogin = findViewById(R.id.btnEntrarLogin);
+        btnIrParaCadastro = findViewById(R.id.btnIrParaCadastro);
         btnSelecionarUsuario = findViewById(R.id.btnSelecionarUsuario);
         pbLogin = findViewById(R.id.pbLogin);
 
         btnEntrarLogin.setOnClickListener(v -> validarEEntrar());
+        
+        btnIrParaCadastro.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, CadastroActivity.class);
+            startActivity(intent);
+        });
+
         btnSelecionarUsuario.setOnClickListener(v -> sincronizarEMostrarUsuarios());
     }
 
@@ -76,8 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 List<Usuario> listaLocal = db.usuarioDao().listarTodos();
                 if (listaLocal.isEmpty()) {
-                    String erro = task.getException() != null ? task.getException().getMessage() : "Erro desconhecido";
-                    Toast.makeText(this, "Falha ao buscar usuários: " + erro, Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Nenhum usuário encontrado.", Toast.LENGTH_SHORT).show();
                 } else {
                     mostrarDialogoSelecao(listaLocal);
                 }
@@ -91,26 +94,18 @@ public class LoginActivity extends AppCompatActivity {
         ArrayAdapter<Usuario> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usuarios);
         builder.setAdapter(adapter, (dialog, which) -> {
             Usuario selecionado = usuarios.get(which);
-            editLoginNome.setText(selecionado.nome);
             editLoginRE.setText(selecionado.re);
-            layoutLoginNome.setError(null);
-            layoutLoginRE.setError(null);
+            validarEEntrar(); // Tenta logar automaticamente ao selecionar
         });
         builder.setNegativeButton("Cancelar", null);
         builder.show();
     }
 
     private void validarEEntrar() {
-        layoutLoginNome.setError(null);
         layoutLoginRE.setError(null);
 
-        String nome = editLoginNome.getText() != null ? editLoginNome.getText().toString().trim() : "";
         String re = editLoginRE.getText() != null ? editLoginRE.getText().toString().trim() : "";
 
-        if (nome.isEmpty()) {
-            layoutLoginNome.setError(getString(R.string.error_nome_usuario));
-            return;
-        }
         if (re.isEmpty() || re.length() > 5) {
             layoutLoginRE.setError(getString(R.string.error_num_cadastro));
             return;
@@ -118,34 +113,32 @@ public class LoginActivity extends AppCompatActivity {
 
         setLoading(true);
 
+        // Verificar na nuvem primeiro
         firestore.collection("usuarios").whereEqualTo("re", re).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         Usuario uCloud = queryDocumentSnapshots.getDocuments().get(0).toObject(Usuario.class);
-                        if (uCloud != null && !uCloud.nome.equalsIgnoreCase(nome)) {
+                        if (uCloud != null) {
+                            // Salva local se não existir
+                            if (db.usuarioDao().buscarPorRE(re) == null) {
+                                db.usuarioDao().inserir(uCloud);
+                            }
                             setLoading(false);
-                            layoutLoginRE.setError("Este RE já pertence a: " + uCloud.nome);
-                            return;
+                            realizarLogin(uCloud.nome, uCloud.re, uCloud.departamento);
                         }
                     } else {
-                        Usuario novo = new Usuario(nome, re);
-                        firestore.collection("usuarios").add(novo)
-                                .addOnFailureListener(e -> Toast.makeText(this, "Erro ao salvar na nuvem", Toast.LENGTH_SHORT).show());
+                        setLoading(false);
+                        layoutLoginRE.setError("Usuário não encontrado. Cadastre-se primeiro.");
                     }
-
-                    if (db.usuarioDao().buscarPorRE(re) == null) {
-                        db.usuarioDao().inserir(new Usuario(nome, re));
-                    }
-                    setLoading(false);
-                    realizarLogin(nome, re);
                 })
                 .addOnFailureListener(e -> {
-                    setLoading(false);
-                    Toast.makeText(this, "Erro de conexão: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    // Permite login offline se o usuário já existir localmente
+                    // Tentar login offline
                     Usuario local = db.usuarioDao().buscarPorRE(re);
-                    if (local != null && local.nome.equalsIgnoreCase(nome)) {
-                        realizarLogin(nome, re);
+                    setLoading(false);
+                    if (local != null) {
+                        realizarLogin(local.nome, local.re, local.departamento);
+                    } else {
+                        Toast.makeText(this, "Erro de conexão e usuário não encontrado localmente.", Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -153,16 +146,17 @@ public class LoginActivity extends AppCompatActivity {
     private void setLoading(boolean loading) {
         pbLogin.setVisibility(loading ? View.VISIBLE : View.GONE);
         btnEntrarLogin.setEnabled(!loading);
+        btnIrParaCadastro.setEnabled(!loading);
         btnSelecionarUsuario.setEnabled(!loading);
-        editLoginNome.setEnabled(!loading);
         editLoginRE.setEnabled(!loading);
     }
 
-    private void realizarLogin(String nome, String re) {
+    private void realizarLogin(String nome, String re, String depto) {
         SharedPreferences preferences = getSharedPreferences("SessaoUsuario", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("NOME_USUARIO", nome);
         editor.putString("RE_USUARIO", re);
+        editor.putString("DEPTO_USUARIO", depto);
         editor.putBoolean("LOGADO", true);
         editor.apply();
 

@@ -34,28 +34,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
-            android:text="@string/title_login"
+            android:text="Login de Usuário"
             android:textColor="@color/blue_primary"
             android:textSize="22sp"
             android:textStyle="bold" />
-
-        <!-- Campo Nome -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/layoutLoginNome"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:hint="@string/label_nome_usuario"
-            app:boxStrokeColor="@color/box_stroke_color"
-            app:hintTextColor="@color/blue_primary">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/editLoginNome"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName|textCapWords" />
-        </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo Número de Cadastro / RE -->
         <com.google.android.material.textfield.TextInputLayout
@@ -84,9 +66,19 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:backgroundTint="@color/blue_primary"
-            android:text="@string/btn_entrar"
+            android:text="Entrar"
             android:textAllCaps="true"
             android:textSize="18sp" />
+
+        <!-- Botão Ir para Cadastro -->
+        <Button
+            android:id="@+id/btnIrParaCadastro"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Novo por aqui? Cadastre-se"
+            android:textColor="@color/blue_primary" />
 
         <!-- Botão Selecionar Usuário Já Cadastrado -->
         <Button

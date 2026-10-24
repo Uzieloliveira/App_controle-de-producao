@@ -41,12 +41,12 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     
-    // Firebase using BoM
+    // Firebase
     implementation(platform(libs.firebaseBom))
     implementation(libs.firebaseFirestore)
     
     // Retrofit & OkHttp
-    implementation(libs.retrofitCore)
+    implementation(libs.retrofitMain)
     implementation(libs.retrofitGson)
     implementation(libs.okhttpLogging)
 

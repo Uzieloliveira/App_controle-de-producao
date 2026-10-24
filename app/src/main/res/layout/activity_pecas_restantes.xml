@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background_screen"
+    tools:context=".PecasRestantesActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTituloPecas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="informe a quantidade de motores na linha"
+                android:textAlignment="center"
+                android:textColor="@color/blue_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Ligação -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Ligação"
+                app:boxStrokeColor="@color/box_stroke_color"
+                app:hintTextColor="@color/blue_primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editLigacao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Solda -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Solda"
+                app:boxStrokeColor="@color/box_stroke_color"
+                app:hintTextColor="@color/blue_primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editSolda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Bandagem -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Bandagem"
+                app:boxStrokeColor="@color/box_stroke_color"
+                app:hintTextColor="@color/blue_primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editBandagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Amarração -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Amarração"
+                app:boxStrokeColor="@color/box_stroke_color"
+                app:hintTextColor="@color/blue_primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAmarracao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Prensa -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:hint="Prensa"
+                app:boxStrokeColor="@color/box_stroke_color"
+                app:hintTextColor="@color/blue_primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editPrensa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Acabamento -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="Acabamento"
+                app:boxStrokeColor="@color/box_stroke_color"
+                app:hintTextColor="@color/blue_primary">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editAcabamento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnEnviarPecas"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Enviar"
+                android:backgroundTint="@color/blue_primary"
+                android:textSize="18sp" />
+
+            <ProgressBar
+                android:id="@+id/pbPecas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,11 +16,17 @@
         android:theme="@style/Theme.ControleDeProdutividade"
         android:usesCleartextTraffic="true">
 
-        <!-- Tela de Login / Cadastro de Usuário -->
+        <!-- Tela de Login -->
         <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:label="@string/title_login" />
+
+        <!-- Tela de Cadastro -->
+        <activity
+            android:name=".CadastroActivity"
+            android:exported="false"
+            android:label="Novo Cadastro" />
 
         <!-- Tela de Início -->
         <activity
@@ -32,7 +38,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Tela de Cadastro -->
+        <!-- Tela de Cadastro de Produção -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -43,6 +49,12 @@
             android:name=".ListaActivity"
             android:exported="false"
             android:label="@string/title_lista" />
+
+        <!-- Nova Tela de Peças Restantes -->
+        <activity
+            android:name=".PecasRestantesActivity"
+            android:exported="false"
+            android:label="Motores na Linha" />
 
     </application>
 
