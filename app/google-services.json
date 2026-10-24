@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "617863510847",
+    "project_id": "controle-de-produtividad-a9660",
+    "storage_bucket": "controle-de-produtividad-a9660.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617863510847:android:3d5d8f76cdf5e8731ff18a",
+        "android_client_info": {
+          "package_name": "com.seuapp.controledeprodutividade"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgu92ux90Lvn04Y4180G_H-hZ9319ouGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

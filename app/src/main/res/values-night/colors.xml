@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores Semânticas para Dark Mode -->
+    <color name="color_background_screen">#121212</color>
+    <color name="color_background_header">#1F1F1F</color>
+    <color name="color_text_primary">#FFFFFF</color>
+    <color name="color_text_secondary">#B0B0B0</color>
+</resources>

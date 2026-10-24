@@ -1,0 +1,17 @@
+<resources>
+    <!-- Tema Base do Aplicativo -->
+    <style name="Theme.ControleDeProdutividade" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Cor Primária (Azul WEG) -->
+        <item name="colorPrimary">@color/blue_primary</item>
+        <item name="colorPrimaryDark">@color/blue_primary_dark</item>
+        <item name="colorAccent">@color/blue_primary</item>
+
+        <!-- Barra de Status -->
+        <item name="android:statusBarColor">@color/blue_primary_dark</item>
+
+        <!-- Fundo das telas e cores de texto padrão -->
+        <item name="android:windowBackground">@color/color_background_screen</item>
+        <item name="android:textColorPrimary">@color/color_text_primary</item>
+        <item name="android:textColorSecondary">@color/color_text_secondary</item>
+    </style>
+</resources>

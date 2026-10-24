@@ -1,0 +1,36 @@
+[versions]
+agp = "8.7.3"
+appcompat = "1.7.0"
+material = "1.12.0"
+constraintlayout = "2.2.0"
+junit = "4.13.2"
+extJunit = "1.2.1"
+espressoCore = "3.6.1"
+room = "2.6.1"
+googleServices = "4.4.2"
+firebaseBom = "33.10.0"
+retrofit = "2.9.0"
+okhttp = "4.12.0"
+
+[libraries]
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "extJunit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# Firebase
+firebaseBom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebaseFirestore = { group = "com.google.firebase", name = "firebase-firestore" }
+
+# Retrofit & OkHttp
+retrofitCore = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofitGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttpLogging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }

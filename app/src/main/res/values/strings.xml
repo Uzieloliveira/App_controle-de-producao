@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Controle de Produtividade</string>
+    <string name="label_operador">Operador</string>
+    <string name="label_valor">Qtd. produção</string>
+    <string name="label_anotacao">Anotação (Opcional)</string>
+    <string name="btn_salvar">Salvar</string>
+    <string name="error_operador">O operador deve ter no mínimo 2 caracteres</string>
+    <string name="error_valor">A quantidade deve ser maior que zero</string>
+    <string name="success_save">Dados salvos com sucesso!</string>
+
+    <!-- Home and Menu -->
+    <string name="title_home">Menu Principal</string>
+    <string name="btn_novo_cadastro">Novo Cadastro</string>
+    <string name="btn_listar_cadastrados">Listar Cadastrados</string>
+    <string name="title_lista">Lista de Cadastros</string>
+    <string name="empty_list">Nenhum cadastro encontrado.</string>
+    <string name="label_data_exibicao">Data: %1$s | Seção: %2$s</string>
+    <string name="msg_salvo_detalhes">Salvo: %1$s | Qtd: %2$s | Data: %3$s</string>
+    <string name="dialog_title_secao">Escolha a Seção</string>
+
+    <!-- Login / Cadastro de Usuário -->
+    <string name="title_login">Cadastro / Login de Usuário</string>
+    <string name="label_nome_usuario">Nome do Usuário</string>
+    <string name="label_num_cadastro">Nº do Cadastro (RE)</string>
+    <string name="btn_entrar">Cadastrar e Entrar</string>
+    <string name="error_nome_usuario">Digite seu nome de usuário</string>
+    <string name="error_num_cadastro">O número do cadastro deve ter exatamente 5 caracteres</string>
+    <string name="label_usuario_logado">Usuário: %1$s</string>
+    <string name="btn_sair">Sair</string>
+    <string name="btn_usuarios_cadastrados">Selecionar Usuário Já Cadastrado</string>
+</resources>
