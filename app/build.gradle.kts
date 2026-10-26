@@ -42,13 +42,13 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     
     // Firebase
-    implementation(platform(libs.firebaseBom))
-    implementation(libs.firebaseFirestore)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
     
     // Retrofit & OkHttp
-    implementation(libs.retrofitMain)
-    implementation(libs.retrofitGson)
-    implementation(libs.okhttpLogging)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

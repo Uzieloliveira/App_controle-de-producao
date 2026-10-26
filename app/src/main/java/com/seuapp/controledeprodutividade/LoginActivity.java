@@ -61,7 +61,8 @@ public class LoginActivity extends AppCompatActivity {
     private void sincronizarEMostrarUsuarios() {
         setLoading(true);
         
-        firestore.collection("usuarios").get().addOnCompleteListener(task -> {
+        // Alterado para a nova coleção "usuarios_producao"
+        firestore.collection("usuarios_producao").get().addOnCompleteListener(task -> {
             setLoading(false);
             if (task.isSuccessful() && task.getResult() != null) {
                 List<Usuario> listaCloud = new ArrayList<>();
@@ -113,8 +114,8 @@ public class LoginActivity extends AppCompatActivity {
 
         setLoading(true);
 
-        // Verificar na nuvem primeiro
-        firestore.collection("usuarios").whereEqualTo("re", re).get()
+        // Verificar na nuvem primeiro na nova coleção "usuarios_producao"
+        firestore.collection("usuarios_producao").whereEqualTo("re", re).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         Usuario uCloud = queryDocumentSnapshots.getDocuments().get(0).toObject(Usuario.class);

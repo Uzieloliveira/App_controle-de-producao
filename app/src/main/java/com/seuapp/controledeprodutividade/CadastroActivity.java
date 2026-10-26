@@ -79,15 +79,15 @@ public class CadastroActivity extends AppCompatActivity {
 
         setLoading(true);
 
-        // Verificar se RE já existe na nuvem
-        firestore.collection("usuarios").whereEqualTo("re", re).get()
+        // Alterado para a nova coleção "usuarios_producao"
+        firestore.collection("usuarios_producao").whereEqualTo("re", re).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
                         setLoading(false);
                         layoutCadastroRE.setError("Este RE já está cadastrado.");
                     } else {
                         Usuario novo = new Usuario(nome, re, depto);
-                        firestore.collection("usuarios").add(novo)
+                        firestore.collection("usuarios_producao").add(novo)
                                 .addOnSuccessListener(documentReference -> {
                                     db.usuarioDao().inserir(novo);
                                     setLoading(false);
