@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         db = AppDatabase.getInstance(this);
 
-        // Obter informações do usuário logado
         SharedPreferences preferences = getSharedPreferences("SessaoUsuario", Context.MODE_PRIVATE);
         usuarioRe = preferences.getString("RE_USUARIO", "");
         usuarioDepto = preferences.getString("DEPTO_USUARIO", "");
@@ -76,14 +76,14 @@ public class MainActivity extends AppCompatActivity {
         btnSalvar = findViewById(R.id.btnSalvar);
         btnVerLista = findViewById(R.id.btnVerLista);
 
+        // Forçar CAIXA ALTA no operador
+        editOperador.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+
         atualizarCabecalho();
 
         layoutHeader.setOnClickListener(v -> mudarSecao());
         btnSalvar.setOnClickListener(v -> validarESalvar());
-        btnVerLista.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ListaActivity.class);
-            startActivity(intent);
-        });
+        btnVerLista.setOnClickListener(v -> startActivity(new Intent(this, ListaActivity.class)));
     }
 
     private void atualizarCabecalho() {
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mudarSecao() {
-        // Opções de seção atualizadas
         final String[] secoes = {"Ligação", "Solda", "Bandagem", "Amarração", "Prensa", "Acabamento"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.dialog_title_secao));
@@ -133,18 +132,11 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        final int valorFinal = valor;
-        final String anotacaoFinal = anotacao;
-        
-        // Agora salva APENAS localmente no SQLite incluindo o departamento
-        Producao novaProducao = new Producao(operador, valorFinal, dataCadastro, secaoEscolhida, anotacaoFinal, usuarioRe, usuarioDepto);
+        // Salvar apenas no SQLite local
+        Producao novaProducao = new Producao(operador, valor, dataCadastro, secaoEscolhida, anotacao, usuarioRe, usuarioDepto);
         db.producaoDao().inserir(novaProducao);
         
-        confirmarSalvo();
-    }
-
-    private void confirmarSalvo() {
-        Toast.makeText(MainActivity.this, R.string.success_save, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.success_save, Toast.LENGTH_SHORT).show();
         editOperador.setText("");
         editValor.setText("");
         editAnotacao.setText("");

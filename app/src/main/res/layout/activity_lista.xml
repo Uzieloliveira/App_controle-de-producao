@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background_screen"
+    android:fitsSystemWindows="true"
     tools:context=".ListaActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvProducao"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
         android:clipToPadding="false"
@@ -32,7 +33,7 @@
 
     <Button
         android:id="@+id/btnEnviar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="Enviar Dados"

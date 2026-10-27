@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".HomeActivity">
 
     <!-- Cabeçalho do Usuário -->
     <LinearLayout
         android:id="@+id/layoutUserHeader"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
@@ -38,66 +39,72 @@
             android:textColor="#D32F2F" />
     </LinearLayout>
 
-    <!-- Conteúdo Central -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Conteúdo Central com Scroll para evitar cortes em telas menores -->
+    <ScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="24dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/layoutUserHeader"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutUserHeader">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/ivLogoWeg"
-            android:layout_width="300dp"
-            android:layout_height="140dp"
-            android:layout_marginBottom="24dp"
-            android:contentDescription="Logo WEG"
-            android:scaleType="fitCenter"
-            android:src="@drawable/weg_logo" />
-
-        <TextView
-            android:id="@+id/tvTituloHome"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:text="@string/title_home"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/blue_primary" />
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp">
 
-        <Button
-            android:id="@+id/btnAbrirCadastro"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/blue_primary"
-            android:text="@string/btn_novo_cadastro"
-            android:textSize="16sp"
-            android:textAllCaps="true" />
+            <ImageView
+                android:id="@+id/ivLogoWeg"
+                android:layout_width="300dp"
+                android:layout_height="140dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="Logo WEG"
+                android:scaleType="fitCenter"
+                android:src="@drawable/weg_logo" />
 
-        <Button
-            android:id="@+id/btnInformarPecas"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="@color/blue_primary"
-            android:text="Informar Peças Restantes"
-            android:textSize="16sp"
-            android:textAllCaps="true" />
+            <TextView
+                android:id="@+id/tvTituloHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:text="@string/title_home"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/blue_primary" />
 
-        <Button
-            android:id="@+id/btnListarCadastrados"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:backgroundTint="@color/blue_primary"
-            android:text="@string/btn_listar_cadastrados"
-            android:textSize="16sp"
-            android:textAllCaps="true" />
+            <Button
+                android:id="@+id/btnAbrirCadastro"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/blue_primary"
+                android:text="@string/btn_novo_cadastro"
+                android:textSize="16sp"
+                android:textAllCaps="true" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnInformarPecas"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="@color/blue_primary"
+                android:text="Informar Peças Restantes"
+                android:textSize="16sp"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/btnListarCadastrados"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/blue_primary"
+                android:text="@string/btn_listar_cadastrados"
+                android:textSize="16sp"
+                android:textAllCaps="true" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

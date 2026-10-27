@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -60,8 +61,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sincronizarEMostrarUsuarios() {
         setLoading(true);
-        
-        // Alterado para a nova coleção "usuarios_producao"
         firestore.collection("usuarios_producao").get().addOnCompleteListener(task -> {
             setLoading(false);
             if (task.isSuccessful() && task.getResult() != null) {
@@ -76,14 +75,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     mostrarDialogoSelecao(listaCloud);
                 } catch (Exception e) {
-                    Toast.makeText(this, "Erro ao processar dados: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Erro ao processar dados", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 List<Usuario> listaLocal = db.usuarioDao().listarTodos();
-                if (listaLocal.isEmpty()) {
-                    Toast.makeText(this, "Nenhum usuário encontrado.", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!listaLocal.isEmpty()) {
                     mostrarDialogoSelecao(listaLocal);
+                } else {
+                    Toast.makeText(this, "Nenhum usuário encontrado.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -96,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         builder.setAdapter(adapter, (dialog, which) -> {
             Usuario selecionado = usuarios.get(which);
             editLoginRE.setText(selecionado.re);
-            validarEEntrar(); // Tenta logar automaticamente ao selecionar
+            validarEEntrar();
         });
         builder.setNegativeButton("Cancelar", null);
         builder.show();
@@ -104,28 +103,36 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validarEEntrar() {
         layoutLoginRE.setError(null);
-
         String re = editLoginRE.getText() != null ? editLoginRE.getText().toString().trim() : "";
-
         if (re.isEmpty() || re.length() > 5) {
             layoutLoginRE.setError(getString(R.string.error_num_cadastro));
             return;
         }
 
         setLoading(true);
+        String currentDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        // Verificar na nuvem primeiro na nova coleção "usuarios_producao"
         firestore.collection("usuarios_producao").whereEqualTo("re", re).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        Usuario uCloud = queryDocumentSnapshots.getDocuments().get(0).toObject(Usuario.class);
+                        QueryDocumentSnapshot doc = (QueryDocumentSnapshot) queryDocumentSnapshots.getDocuments().get(0);
+                        Usuario uCloud = doc.toObject(Usuario.class);
                         if (uCloud != null) {
-                            // Salva local se não existir
-                            if (db.usuarioDao().buscarPorRE(re) == null) {
-                                db.usuarioDao().inserir(uCloud);
-                            }
-                            setLoading(false);
-                            realizarLogin(uCloud.nome, uCloud.re, uCloud.departamento);
+                            // Atualizar ID do dispositivo para garantir sessão única
+                            firestore.collection("usuarios_producao").document(doc.getId())
+                                    .update("lastDeviceId", currentDeviceId)
+                                    .addOnSuccessListener(aVoid -> {
+                                        uCloud.lastDeviceId = currentDeviceId;
+                                        if (db.usuarioDao().buscarPorRE(re) == null) {
+                                            db.usuarioDao().inserir(uCloud);
+                                        }
+                                        setLoading(false);
+                                        realizarLogin(uCloud.nome, uCloud.re, uCloud.departamento, currentDeviceId);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        setLoading(false);
+                                        Toast.makeText(this, "Erro ao atualizar sessão", Toast.LENGTH_SHORT).show();
+                                    });
                         }
                     } else {
                         setLoading(false);
@@ -133,13 +140,12 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Tentar login offline
                     Usuario local = db.usuarioDao().buscarPorRE(re);
                     setLoading(false);
                     if (local != null) {
-                        realizarLogin(local.nome, local.re, local.departamento);
+                        realizarLogin(local.nome, local.re, local.departamento, currentDeviceId);
                     } else {
-                        Toast.makeText(this, "Erro de conexão e usuário não encontrado localmente.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Erro de conexão.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -152,12 +158,13 @@ public class LoginActivity extends AppCompatActivity {
         editLoginRE.setEnabled(!loading);
     }
 
-    private void realizarLogin(String nome, String re, String depto) {
+    private void realizarLogin(String nome, String re, String depto, String deviceId) {
         SharedPreferences preferences = getSharedPreferences("SessaoUsuario", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("NOME_USUARIO", nome);
         editor.putString("RE_USUARIO", re);
         editor.putString("DEPTO_USUARIO", depto);
+        editor.putString("DEVICE_ID", deviceId);
         editor.putBoolean("LOGADO", true);
         editor.apply();
 

@@ -18,6 +18,7 @@ public class Usuario {
     public String nome;
     public String re;
     public String departamento;
+    public String lastDeviceId; // Controle de sessão única
 
     // CONSTRUTOR VAZIO PÚBLICO E EXPLÍCITO - OBRIGATÓRIO PARA O FIREBASE
     public Usuario() {

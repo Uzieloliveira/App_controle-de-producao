@@ -1,118 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
-    <LinearLayout
-        android:id="@+id/layoutHeader"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:padding="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/tvDataSelecionada"
+        <LinearLayout
+            android:id="@+id/layoutHeader"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Data: --/--/---- | Seção: ---"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/blue_primary" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground"
+            android:padding="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@android:drawable/ic_menu_edit"
-            app:tint="@color/blue_primary" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvDataSelecionada"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Data: --/--/---- | Seção: ---"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/blue_primary" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutOperador"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="@string/label_operador"
-        app:boxStrokeColor="@color/box_stroke_color"
-        app:hintTextColor="@color/blue_primary"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/layoutHeader">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@android:drawable/ic_menu_edit"
+                app:tint="@color/blue_primary" />
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editOperador"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutOperador"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/color_text_secondary" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="16dp"
+            android:hint="@string/label_operador"
+            app:boxStrokeColor="@color/box_stroke_color"
+            app:hintTextColor="@color/blue_primary"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutHeader">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutValor"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/label_valor"
-        app:boxStrokeColor="@color/box_stroke_color"
-        app:hintTextColor="@color/blue_primary"
-        app:errorEnabled="true"
-        app:layout_constraintTop_toBottomOf="@id/layoutOperador">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editOperador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapCharacters"
+                android:textColorHint="@color/color_text_secondary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editValor"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutValor"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:hint="@string/label_valor"
+            app:boxStrokeColor="@color/box_stroke_color"
+            app:hintTextColor="@color/blue_primary"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutOperador">
 
-    <!-- Novo campo de Anotação (Opcional) -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layoutAnotacao"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="@string/label_anotacao"
-        app:boxStrokeColor="@color/box_stroke_color"
-        app:hintTextColor="@color/blue_primary"
-        app:layout_constraintTop_toBottomOf="@id/layoutValor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editValor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editAnotacao"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layoutAnotacao"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="textMultiLine"
-            android:minLines="2"
-            android:gravity="top" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="8dp"
+            android:hint="@string/label_anotacao"
+            app:boxStrokeColor="@color/box_stroke_color"
+            app:hintTextColor="@color/blue_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutValor">
 
-    <Button
-        android:id="@+id/btnSalvar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/btn_salvar"
-        android:backgroundTint="@color/blue_primary"
-        app:layout_constraintTop_toBottomOf="@id/layoutAnotacao" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editAnotacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:minLines="2"
+                android:gravity="top" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnVerLista"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/btn_listar_cadastrados"
-        android:textColor="@color/blue_primary"
-        app:layout_constraintTop_toBottomOf="@id/btnSalvar" />
+        <Button
+            android:id="@+id/btnSalvar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/btn_salvar"
+            android:backgroundTint="@color/blue_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutAnotacao" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnVerLista"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/btn_listar_cadastrados"
+            android:textColor="@color/blue_primary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnSalvar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

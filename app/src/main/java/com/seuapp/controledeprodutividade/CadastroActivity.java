@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -78,8 +79,9 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         setLoading(true);
+        String currentDeviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-        // Alterado para a nova coleção "usuarios_producao"
+        // Verificar na nova coleção "usuarios_producao"
         firestore.collection("usuarios_producao").whereEqualTo("re", re).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
@@ -87,11 +89,12 @@ public class CadastroActivity extends AppCompatActivity {
                         layoutCadastroRE.setError("Este RE já está cadastrado.");
                     } else {
                         Usuario novo = new Usuario(nome, re, depto);
+                        novo.lastDeviceId = currentDeviceId;
                         firestore.collection("usuarios_producao").add(novo)
                                 .addOnSuccessListener(documentReference -> {
                                     db.usuarioDao().inserir(novo);
                                     setLoading(false);
-                                    realizarLogin(nome, re, depto);
+                                    realizarLogin(nome, re, depto, currentDeviceId);
                                 })
                                 .addOnFailureListener(e -> {
                                     setLoading(false);
@@ -101,7 +104,7 @@ public class CadastroActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     setLoading(false);
-                    Toast.makeText(this, "Erro de conexão: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Erro de conexão", Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -111,12 +114,13 @@ public class CadastroActivity extends AppCompatActivity {
         btnVoltarLogin.setEnabled(!loading);
     }
 
-    private void realizarLogin(String nome, String re, String depto) {
+    private void realizarLogin(String nome, String re, String depto, String deviceId) {
         SharedPreferences preferences = getSharedPreferences("SessaoUsuario", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("NOME_USUARIO", nome);
         editor.putString("RE_USUARIO", re);
         editor.putString("DEPTO_USUARIO", depto);
+        editor.putString("DEVICE_ID", deviceId);
         editor.putBoolean("LOGADO", true);
         editor.apply();
 
